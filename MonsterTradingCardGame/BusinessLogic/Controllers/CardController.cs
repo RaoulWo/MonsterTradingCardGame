@@ -3,7 +3,7 @@ using BusinessObjects.Models;
 using BusinessObjects.Interfaces.Controllers;
 using BusinessObjects.Interfaces.Services;
 
-namespace Presentation.Controllers
+namespace BusinessLogic.Controllers
 {
     public class CardController : ICardController
     {
