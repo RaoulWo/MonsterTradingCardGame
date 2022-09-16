@@ -1,4 +1,6 @@
-﻿using BusinessObjects.Interfaces.Controllers;
+﻿using BusinessObjects.Enums;
+using BusinessObjects.Models;
+using BusinessObjects.Interfaces.Controllers;
 using BusinessObjects.Interfaces.Services;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,11 @@ namespace BusinessLogic.Controllers
         public CardController(ICardService cardService)
         {
             this.cardService = cardService;
+        }
+
+        public Card GetCard(CardType cardType)
+        {
+            return this.cardService.GetCard(cardType);
         }
     }
 }

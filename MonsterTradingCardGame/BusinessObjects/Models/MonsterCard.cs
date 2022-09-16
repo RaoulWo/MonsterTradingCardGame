@@ -9,7 +9,7 @@ namespace BusinessObjects.Models
 {
     public class MonsterCard : Card
     {
-        MonsterCard(string name, int damage, ElementType elementType)
+        public MonsterCard(string name, int damage, ElementType elementType)
             : base(name, damage, elementType)
         { }
     }
