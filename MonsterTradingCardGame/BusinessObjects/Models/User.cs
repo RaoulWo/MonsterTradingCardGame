@@ -1,13 +1,8 @@
 ﻿using BusinessObjects.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessObjects.Models
 {
-    internal class User : Interfaces.IUser
+    internal class User : IUser
     {
         public ICredentials Credentials { get; }
 
