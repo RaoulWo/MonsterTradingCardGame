@@ -2,26 +2,21 @@
 using BusinessObjects.Models;
 using BusinessObjects.Interfaces.Controllers;
 using BusinessObjects.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BusinessLogic.Controllers
+namespace Presentation.Controllers
 {
     public class CardController : ICardController
     {
-        public ICardService cardService;
+        public ICardService CardService;
 
         public CardController(ICardService cardService)
         {
-            this.cardService = cardService;
+            this.CardService = cardService;
         }
 
         public Card GetCard(CardType cardType)
         {
-            return this.cardService.GetCard(cardType);
+            return this.CardService.GetCard(cardType);
         }
     }
 }

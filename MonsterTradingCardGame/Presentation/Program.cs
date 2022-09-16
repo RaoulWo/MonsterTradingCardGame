@@ -1,8 +1,8 @@
-﻿using BusinessLogic.Controllers;
-using BusinessLogic.Services;
+﻿using BusinessLogic.Services;
 using BusinessObjects.Enums;
 using BusinessObjects.Interfaces.Controllers;
 using BusinessObjects.Models;
+using Presentation.Controllers;
 
 namespace Presentation
 {
@@ -13,9 +13,9 @@ namespace Presentation
             ICardController controller = new CardController(new CardService(FactoryType.Monster));
             Card dragon = controller.GetCard(CardType.Dragon);
 
-            Console.WriteLine("Name: {0}", dragon.Name);
-            Console.WriteLine("Damage: {0}", dragon.Damage);
-            Console.WriteLine("ElementType: {0}", dragon.ElementType);
+            Console.WriteLine($"Name: {dragon.Name}");
+            Console.WriteLine($"Damage: {dragon.Damage}");
+            Console.WriteLine($"ElementType: {dragon.ElementType}");
         }
     }
 }
