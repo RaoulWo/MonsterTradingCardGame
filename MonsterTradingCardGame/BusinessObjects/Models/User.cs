@@ -1,14 +1,17 @@
-﻿using BusinessObjects.Interfaces;
+﻿using BusinessObjects.Base;
+using BusinessObjects.Interfaces;
 
 namespace BusinessObjects.Models
 {
-    internal class User : IUser
+    public class User : Entity, IAggregateRoot
     {
-        public ICredentials Credentials { get; }
+        public string Username { get; set; }
 
-        public User(ICredentials credentials)
+        public string Password { get; set; }
+
+        protected override void Validate()
         {
-            Credentials = credentials;
+            throw new NotImplementedException();
         }
     }
 }

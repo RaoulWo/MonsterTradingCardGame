@@ -5,6 +5,6 @@ namespace BusinessObjects.Interfaces.Services
 {
     public interface ICardService
     {
-        public Card GetCard(CardType cardType);
+
     }
 }
