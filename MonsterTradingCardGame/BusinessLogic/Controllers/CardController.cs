@@ -13,10 +13,5 @@ namespace BusinessLogic.Controllers
         {
             this.CardService = cardService;
         }
-
-        public Card GetCard(CardType cardType)
-        {
-            return this.CardService.GetCard(cardType);
-        }
     }
 }

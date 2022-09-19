@@ -1,13 +1,14 @@
 ﻿using BusinessObjects.Enums;
+using BusinessObjects.Interfaces;
 using BusinessObjects.Models;
 
 namespace BusinessLogic.Utils
 {
-    public abstract class CardFactory
+    public abstract class CardFactory : ICardFactory
     {
         public abstract Card GetCard(CardType cardType);
 
-        public static CardFactory CreateCardFactory(FactoryType factoryType)
+        public static ICardFactory CreateCardFactory(FactoryType factoryType)
         {
             switch (factoryType)
             {

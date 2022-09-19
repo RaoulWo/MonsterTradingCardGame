@@ -1,7 +1,7 @@
 ﻿
 namespace BusinessObjects.Interfaces
 {
-    public interface ICredentials
+    public interface IAggregateRoot
     {
 
     }

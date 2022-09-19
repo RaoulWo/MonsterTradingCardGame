@@ -2,7 +2,7 @@
 
 namespace BusinessObjects.Models
 {
-    public abstract class Card : Interfaces.ICard
+    public abstract class Card
     {
         public string Name { get; }
         public int Damage { get; }
