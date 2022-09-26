@@ -1,9 +1,9 @@
 ﻿
 using BusinessObjects.Models;
 
-namespace BusinessObjects.Interfaces.Services
+namespace BusinessObjects.Interfaces.Facades
 {
-    public interface IUserService
+    public interface IUserFacade
     {
         public Task<IEnumerable<User>> GetAll();
         public Task<User> GetById(int id);

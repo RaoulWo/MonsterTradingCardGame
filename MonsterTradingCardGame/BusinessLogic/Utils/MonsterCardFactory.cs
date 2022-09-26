@@ -5,12 +5,12 @@ namespace BusinessLogic.Utils
 {
     public class MonsterCardFactory : CardFactory
     {
-        public override Card GetCard(CardType cardType)
+        public override Card GetCard(string name)
         {
-            switch (cardType)
+            switch (name)
             {
-                case CardType.Dragon:
-                    return new MonsterCard("Dragon", 5, ElementType.Normal);
+                case "Dragon":
+                    return new MonsterCard("Dragon", 5, CardType.Monster, ElementType.Normal);
                 default:
                     return null;
             }
