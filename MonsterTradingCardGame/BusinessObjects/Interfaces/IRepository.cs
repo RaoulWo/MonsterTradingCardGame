@@ -5,14 +5,10 @@ namespace BusinessObjects.Interfaces
 {
     public interface IRepository<T> where T : Entity, IAggregateRoot
     {
-        IEnumerable<T> GetAll(string getAllSql);
-
-        T GetById(int id, string getByIdSql);
-
-        int Insert(T entity, string insertSql, SqlTransaction sqlTransaction);
-
-        int Update(T entity, string updateSql, SqlTransaction sqlTransaction);
-
-        int Delete(int id, string deleteSql, SqlTransaction sqlTransaction);
+        public Task<IEnumerable<T>> GetAll(string getAllSql);
+        public Task<T> GetById(int id, string getByIdSql);
+        public Task<int> Insert(T entity, string insertSql, SqlTransaction sqlTransaction);
+        public Task<int> Update(T entity, string updateSql, SqlTransaction sqlTransaction);
+        public Task<int> Delete(int id, string deleteSql, SqlTransaction sqlTransaction);
     }
 }

@@ -5,6 +5,21 @@ namespace DataAccess
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
+        public static IUnitOfWork Singleton
+        {
+            get
+            {
+                if (_singleton == null)
+                {
+                    _singleton = new UnitOfWork(new DatabaseContextFactory());
+                }
+
+                return _singleton;
+            }
+        }
+
+        private static IUnitOfWork _singleton = null;
+
         public SqlTransaction Transaction { get; private set; }
 
         /// <summary>
@@ -25,7 +40,7 @@ namespace DataAccess
         /// Initializes the DatabaseContextFactory.
         /// </summary>
         /// <param name="factory"></param>
-        public UnitOfWork(IDatabaseContextFactory factory)
+        private UnitOfWork(IDatabaseContextFactory factory)
         {
             _factory = factory;
         }

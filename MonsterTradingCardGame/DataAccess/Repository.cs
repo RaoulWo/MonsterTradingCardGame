@@ -10,7 +10,7 @@ namespace DataAccess
         private SqlConnection _connection;
         protected readonly IUnitOfWork UnitOfWork;
 
-        public Repository(IUnitOfWork unitOfWork)
+        protected Repository(IUnitOfWork unitOfWork)
         {
             if (unitOfWork == null)
             {
@@ -26,7 +26,7 @@ namespace DataAccess
         /// </summary>
         /// <param name="getAllSql"></param>
         /// <returns></returns>
-        public IEnumerable<T> GetAll(string getAllSql)
+        public async Task<IEnumerable<T>> GetAll(string getAllSql)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace DataAccess
         /// <param name="id"></param>
         /// <param name="getByIdSql"></param>
         /// <returns></returns>
-        public T GetById(int id, string getByIdSql)
+        public async Task<T> GetById(int id, string getByIdSql)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace DataAccess
         /// <param name="insertSql"></param>
         /// <param name="sqlTransaction"></param>
         /// <returns></returns>
-        public int Insert(T entity, string insertSql, SqlTransaction sqlTransaction)
+        public async Task<int> Insert(T entity, string insertSql, SqlTransaction sqlTransaction)
         {
             int rowsAffected = 0;
 
@@ -113,7 +113,7 @@ namespace DataAccess
         /// <param name="updateSql"></param>
         /// <param name="sqlTransaction"></param>
         /// <returns></returns>
-        public int Update(T entity, string updateSql, SqlTransaction sqlTransaction)
+        public async Task<int> Update(T entity, string updateSql, SqlTransaction sqlTransaction)
         {
             int rowsAffected = 0;
 
@@ -144,7 +144,7 @@ namespace DataAccess
         /// <param name="deleteSql"></param>
         /// <param name="sqlTransaction"></param>
         /// <returns></returns>
-        public int Delete(int id, string deleteSql, SqlTransaction sqlTransaction)
+        public async Task<int> Delete(int id, string deleteSql, SqlTransaction sqlTransaction)
         {
             int rowsAffected = 0;
 

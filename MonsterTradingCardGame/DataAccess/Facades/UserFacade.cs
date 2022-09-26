@@ -1,29 +1,46 @@
 ﻿using System.Data.SqlClient;
 using BusinessObjects.Interfaces;
+using BusinessObjects.Interfaces.Facades;
 using BusinessObjects.Interfaces.Repositories;
 using BusinessObjects.Models;
+using DataAccess.Repositories;
 
 namespace DataAccess.Facades
 {
-    public class UserFacade
+    public class UserFacade : IUserFacade
     {
-        private IUserRepository _userRepository;
-        private IUnitOfWork _unitOfWork;
-
-        public UserFacade(IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public static UserFacade Singleton
         {
-            _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
+            get
+            {
+                if (_singleton == null)
+                {
+                    _singleton = new UserFacade(/* UserRepository.Singleton, UnitOfWork.Singleton */);
+                }
+
+                return _singleton;
+            }
         }
 
-        public IEnumerable<User> GetAll()
+        private static UserFacade _singleton = null;
+
+        // private IUserRepository _userRepository;
+        // private IUnitOfWork _unitOfWork;
+
+        private UserFacade(/* IUserRepository userRepository, IUnitOfWork unitOfWork */)
+        {
+            // _userRepository = userRepository;
+            // _unitOfWork = unitOfWork;
+        }
+
+        public async Task<IEnumerable<User>> GetAll()
         {
             string sqlStatement = "SELECT * FROM User";
-            IEnumerable<User> users;
+            IEnumerable<User> users = null;
 
             try
             {
-                users = _userRepository.GetAll(sqlStatement);
+                // users = await _userRepository.GetAll(sqlStatement);
             }
             catch (Exception e)
             {
@@ -33,14 +50,14 @@ namespace DataAccess.Facades
             return users;
         }
 
-        public User GetById(int id)
+        public async Task<User> GetById(int id)
         {
             string sqlStatement = "SELECT * FROM User WHERE Id = @Id";
-            User user = new User();
+            User user = null;
 
             try
             {
-                user = _userRepository.GetById(id, sqlStatement);
+                // user = await _userRepository.GetById(id, sqlStatement);
             }
             catch (Exception e)
             {
@@ -50,16 +67,16 @@ namespace DataAccess.Facades
             return user;
         }
 
-        public int Insert(User user)
+        public async Task<int> Insert(User user)
         {
             string sqlStatement = "INSERT INTO Person (Username, Password) VALUES (@Username, @Password)";
             int rowsAffected = 0;
 
             try
             {
-                SqlTransaction transaction = _unitOfWork.BeginTransaction();
-                rowsAffected = _userRepository.Insert(user, sqlStatement, transaction);
-                _unitOfWork.CommitTransaction();
+                // SqlTransaction transaction = _unitOfWork.BeginTransaction();
+                // rowsAffected = await _userRepository.Insert(user, sqlStatement, transaction);
+                // _unitOfWork.CommitTransaction();
             }
             catch (Exception e)
             {
@@ -69,16 +86,16 @@ namespace DataAccess.Facades
             return rowsAffected;
         }
 
-        public int Update(User user)
+        public async Task<int> Update(User user)
         {
             string sqlStatement = "UPDATE User SET Username = @Username, Password = @Password WHERE Id = @Id";
             int rowsAffected = 0;
 
             try
             {
-                SqlTransaction transaction = _unitOfWork.BeginTransaction();
-                rowsAffected = _userRepository.Update(user, sqlStatement, transaction);
-                _unitOfWork.CommitTransaction();
+                // SqlTransaction transaction = _unitOfWork.BeginTransaction();
+                // rowsAffected = await _userRepository.Update(user, sqlStatement, transaction);
+                // _unitOfWork.CommitTransaction();
             }
             catch (Exception e)
             {
@@ -88,16 +105,16 @@ namespace DataAccess.Facades
             return rowsAffected;
         }
 
-        public int Delete(int id)
+        public async Task<int> Delete(int id)
         {
             string sqlStatement = "DELETE FROM User WHERE Id = @Id";
             int rowsAffected = 0;
 
             try
             {
-                SqlTransaction transaction = _unitOfWork.BeginTransaction();
-                rowsAffected = _userRepository.Delete(id, sqlStatement, transaction);
-                _unitOfWork.CommitTransaction();
+                // SqlTransaction transaction = _unitOfWork.BeginTransaction();
+                // rowsAffected = await _userRepository.Delete(id, sqlStatement, transaction);
+                // _unitOfWork.CommitTransaction();
             }
             catch (Exception e)
             {

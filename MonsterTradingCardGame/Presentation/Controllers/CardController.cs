@@ -1,9 +1,7 @@
-﻿using BusinessObjects.Enums;
-using BusinessObjects.Models;
-using BusinessObjects.Interfaces.Controllers;
+﻿using BusinessObjects.Interfaces.Controllers;
 using BusinessObjects.Interfaces.Services;
 
-namespace BusinessLogic.Controllers
+namespace Presentation.Controllers
 {
     public class CardController : ICardController
     {

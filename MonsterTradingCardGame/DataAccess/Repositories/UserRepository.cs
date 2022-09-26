@@ -7,7 +7,22 @@ namespace DataAccess.Repositories
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        public UserRepository(IUnitOfWork unitOfWork)
+        public static IUserRepository Singleton
+        {
+            get
+            {
+                if (_singleton == null)
+                {
+                    _singleton = new UserRepository(DataAccess.UnitOfWork.Singleton);
+                }
+
+                return _singleton;
+            }
+        }
+
+        private static IUserRepository _singleton = null;
+
+        private UserRepository(IUnitOfWork unitOfWork)
             : base(unitOfWork) 
         { }
 
