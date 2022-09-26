@@ -61,6 +61,22 @@ namespace Presentation.Controllers
             return user;
         }
 
+        public async Task<User> GetByName(string name)
+        {
+            User user = null;
+
+            try
+            {
+                user = await _userService.GetByName(name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return user;
+        }
+
         public async Task<int> Insert(User user)
         {
             int rowsAffected = 0;
@@ -100,6 +116,22 @@ namespace Presentation.Controllers
             try
             {
                 rowsAffected = await _userService.Delete(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return rowsAffected;
+        }
+
+        public async Task<int> Delete(string name)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                rowsAffected = await _userService.Delete(name);
             }
             catch (Exception e)
             {

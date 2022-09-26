@@ -5,12 +5,12 @@ namespace BusinessLogic.Utils
 {
     public class SpellCardFactory : CardFactory
     {
-        public override Card GetCard(CardType cardType)
+        public override Card GetCard(string name)
         {
-            switch (cardType)
+            switch (name)
             {
-                case CardType.Spell:
-                    return new SpellCard("Spell", 5, ElementType.Normal);
+                case "Spell":
+                    return new SpellCard("Spell", 5, CardType.Spell, ElementType.Normal);
                 default:
                     return null;
             }

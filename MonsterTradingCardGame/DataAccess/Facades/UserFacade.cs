@@ -67,6 +67,23 @@ namespace DataAccess.Facades
             return user;
         }
 
+        public async Task<User> GetByName(string name)
+        {
+            string sqlStatement = "SELECT * FROM User WHERE Username = @Username";
+            User user = null;
+
+            try
+            {
+                // user = await _userRepository.GetByName(name, sqlStatement);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return user;
+        }
+
         public async Task<int> Insert(User user)
         {
             string sqlStatement = "INSERT INTO Person (Username, Password) VALUES (@Username, @Password)";
@@ -108,6 +125,25 @@ namespace DataAccess.Facades
         public async Task<int> Delete(int id)
         {
             string sqlStatement = "DELETE FROM User WHERE Id = @Id";
+            int rowsAffected = 0;
+
+            try
+            {
+                // SqlTransaction transaction = _unitOfWork.BeginTransaction();
+                // rowsAffected = await _userRepository.Delete(id, sqlStatement, transaction);
+                // _unitOfWork.CommitTransaction();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return rowsAffected;
+        }
+
+        public async Task<int> Delete(string name)
+        {
+            string sqlStatement = "DELETE FROM User WHERE Username = @Username";
             int rowsAffected = 0;
 
             try

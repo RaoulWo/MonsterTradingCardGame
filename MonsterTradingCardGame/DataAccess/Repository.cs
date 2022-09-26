@@ -7,7 +7,7 @@ namespace DataAccess
 {
     public abstract class Repository<T> : IRepository<T> where T : Entity, IAggregateRoot, new()
     {
-        private SqlConnection _connection;
+        protected SqlConnection _connection;
         protected readonly IUnitOfWork UnitOfWork;
 
         protected Repository(IUnitOfWork unitOfWork)

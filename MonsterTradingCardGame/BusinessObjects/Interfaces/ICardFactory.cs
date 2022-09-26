@@ -1,11 +1,10 @@
-﻿
-using BusinessObjects.Enums;
+﻿using BusinessObjects.Enums;
 using BusinessObjects.Models;
 
 namespace BusinessObjects.Interfaces
 {
     public interface ICardFactory
     {
-        public Card GetCard(CardType cardType);
+        public Card GetCard(string name);
     }
 }

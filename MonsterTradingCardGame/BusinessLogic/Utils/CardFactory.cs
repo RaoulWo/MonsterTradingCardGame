@@ -6,15 +6,15 @@ namespace BusinessLogic.Utils
 {
     public abstract class CardFactory : ICardFactory
     {
-        public abstract Card GetCard(CardType cardType);
+        public abstract Card GetCard(string name);
 
-        public static ICardFactory CreateCardFactory(FactoryType factoryType)
+        public static ICardFactory CreateCardFactory(CardType cardType)
         {
-            switch (factoryType)
+            switch (cardType)
             {
-                case FactoryType.Monster:
+                case CardType.Monster:
                     return new MonsterCardFactory();
-                case FactoryType.Spell:
+                case CardType.Spell:
                     return new SpellCardFactory();
                 default:
                     return null;
