@@ -20,6 +20,16 @@ namespace Presentation
                 Console.WriteLine("");
             }
 
+            User user1 = await userController.GetById(1);
+            User user2 = await userController.GetByName("Admin");
+
+            Console.WriteLine(user1.Username);
+            Console.WriteLine(user1.Password);
+
+            Console.WriteLine("");
+
+            Console.WriteLine(user2.Username);
+            Console.WriteLine(user2.Password);
         }
     }
 }

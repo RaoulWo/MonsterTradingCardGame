@@ -54,6 +54,15 @@ namespace BusinessLogic.Services
 
         public async Task<User> GetById(int id)
         {
+            IEnumerable<User> list = await GetAll();
+
+            foreach (User user in list)
+            {
+                if (user.Id == id) return user;
+            }
+
+            return null;
+
             try
             {
                 return await _userFacade.GetById(id);
@@ -66,6 +75,15 @@ namespace BusinessLogic.Services
 
         public async Task<User> GetByName(string name)
         {
+            IEnumerable<User> list = await GetAll();
+
+            foreach (User user in list)
+            {
+                if (user.Username == name) return user;
+            }
+
+            return null;
+
             try
             {
                 return await _userFacade.GetByName(name);
