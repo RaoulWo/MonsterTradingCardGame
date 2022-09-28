@@ -129,17 +129,5 @@ namespace BusinessLogic.Services
                 throw e;
             }
         }
-
-        public async Task<int> Delete(string name)
-        {
-            try
-            {
-                return await _userFacade.Delete(name);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
     }
 }

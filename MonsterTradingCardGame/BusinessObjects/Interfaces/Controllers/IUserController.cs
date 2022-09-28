@@ -5,12 +5,10 @@ namespace BusinessObjects.Interfaces.Controllers
 {
     public interface IUserController
     {
-        public Task<IEnumerable<User>> GetAll();
-        public Task<User> GetById(int id);
-        public Task<User> GetByName(string name);
-        public Task<int> Insert(User user);
-        public Task<int> Update(User user);
-        public Task<int> Delete(int id);
-        public Task<int> Delete(string name);
+        public Task<string> GetAll(HttpRequest httpRequest);
+        public Task<string> GetById(HttpRequest httpRequest);
+        public Task<string> Insert(HttpRequest httpRequest);
+        public Task<string> Update(HttpRequest httpRequest);
+        public Task<string> Delete(HttpRequest httpRequest);
     }
 }

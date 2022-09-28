@@ -58,7 +58,7 @@ namespace Presentation
                         {
                             httpParser.HasFinishedParsing = false;
 
-                            string response = httpHandler.HandleRequest(httpParser.HttpRequest);
+                            string response = await httpHandler.HandleRequest(httpParser.HttpRequest);
 
                             // Send back a response.
                             stream.Write(Encoding.ASCII.GetBytes(response));

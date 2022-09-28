@@ -29,7 +29,7 @@ namespace Presentation.Controllers
             _userService = userService;
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<string> GetAll(HttpRequest httpRequest)
         {
             IEnumerable<User> users = null;
 
@@ -42,11 +42,13 @@ namespace Presentation.Controllers
                 Console.WriteLine(e);
             }
 
-            return users;
+            return Newtonsoft.Json.JsonConvert.SerializeObject(users);
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<string> GetById(HttpRequest httpRequest)
         {
+            int id = Convert.ToInt32(httpRequest.Target.Substring(7));
+
             User user = null;
 
             try
@@ -58,27 +60,13 @@ namespace Presentation.Controllers
                 Console.WriteLine(e);
             }
 
-            return user;
+            return Newtonsoft.Json.JsonConvert.SerializeObject(user);
         }
 
-        public async Task<User> GetByName(string name)
+        public async Task<string> Insert(HttpRequest httpRequest)
         {
-            User user = null;
+            User user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(httpRequest.Body);
 
-            try
-            {
-                user = await _userService.GetByName(name);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-            return user;
-        }
-
-        public async Task<int> Insert(User user)
-        {
             int rowsAffected = 0;
 
             try
@@ -90,11 +78,13 @@ namespace Presentation.Controllers
                 Console.WriteLine(e);
             }
 
-            return rowsAffected;
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new { rowsAffected = rowsAffected });
         }
 
-        public async Task<int> Update(User user)
+        public async Task<string> Update(HttpRequest httpRequest)
         {
+            User user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(httpRequest.Body);
+
             int rowsAffected = 0;
 
             try
@@ -106,11 +96,13 @@ namespace Presentation.Controllers
                 Console.WriteLine(e);
             }
 
-            return rowsAffected;
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new { rowsAffected = rowsAffected });
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<string> Delete(HttpRequest httpRequest)
         {
+            int id = Convert.ToInt32(httpRequest.Target.Substring(7));
+
             int rowsAffected = 0;
 
             try
@@ -122,23 +114,7 @@ namespace Presentation.Controllers
                 Console.WriteLine(e);
             }
 
-            return rowsAffected;
-        }
-
-        public async Task<int> Delete(string name)
-        {
-            int rowsAffected = 0;
-
-            try
-            {
-                rowsAffected = await _userService.Delete(name);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-            return rowsAffected;
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new { rowsAffected = rowsAffected });
         }
     }
 }
