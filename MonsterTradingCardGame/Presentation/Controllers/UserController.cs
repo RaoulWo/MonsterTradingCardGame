@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Services;
+using BusinessObjects.Entities;
 using BusinessObjects.Interfaces.Controllers;
 using BusinessObjects.Interfaces.Services;
 using BusinessObjects.Models;
@@ -31,7 +32,7 @@ namespace Presentation.Controllers
 
         public async Task<string> GetAll(HttpRequest httpRequest)
         {
-            IEnumerable<User> users = null;
+            IEnumerable<UserEntity> users = null;
 
             try
             {
@@ -49,7 +50,7 @@ namespace Presentation.Controllers
         {
             int id = Convert.ToInt32(httpRequest.Target.Substring(7));
 
-            User user = null;
+            UserEntity user = null;
 
             try
             {
@@ -67,7 +68,7 @@ namespace Presentation.Controllers
         {
             string name = httpRequest.Target.Substring(7);
 
-            User user = null;
+            UserEntity user = null;
 
             try
             {
@@ -83,7 +84,7 @@ namespace Presentation.Controllers
 
         public async Task<string> Insert(HttpRequest httpRequest)
         {
-            User user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(httpRequest.Body.Trim());
+            UserEntity user = Newtonsoft.Json.JsonConvert.DeserializeObject<UserEntity>(httpRequest.Body.Trim());
 
             int rowsAffected = 0;
 
@@ -101,7 +102,7 @@ namespace Presentation.Controllers
 
         public async Task<string> Update(HttpRequest httpRequest)
         {
-            User user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(httpRequest.Body);
+            UserEntity user = Newtonsoft.Json.JsonConvert.DeserializeObject<UserEntity>(httpRequest.Body);
 
             int rowsAffected = 0;
 

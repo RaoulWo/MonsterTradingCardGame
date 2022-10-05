@@ -1,7 +1,7 @@
-﻿using BusinessObjects.Interfaces;
+﻿using BusinessObjects.Entities;
+using BusinessObjects.Interfaces;
 using BusinessObjects.Interfaces.Facades;
 using BusinessObjects.Interfaces.Repositories;
-using BusinessObjects.Models;
 using DataAccess.Repositories;
 using Npgsql;
 
@@ -33,10 +33,10 @@ namespace DataAccess.Facades
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<UserEntity>> GetAll()
         {
-            string sqlStatement = "SELECT * FROM public.\"User\"";
-            IEnumerable<User> users = null;
+            string sqlStatement = "SELECT * FROM public.\"user\"";
+            IEnumerable<UserEntity> users = null;
 
             try
             {
@@ -50,10 +50,10 @@ namespace DataAccess.Facades
             return users;
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<UserEntity> GetById(int id)
         {
-            string sqlStatement = "SELECT * FROM public.\"User\" WHERE Id = @Id";
-            User user = null;
+            string sqlStatement = "SELECT * FROM public.\"user\" WHERE Id = @Id";
+            UserEntity user = null;
 
             try
             {
@@ -66,10 +66,10 @@ namespace DataAccess.Facades
 
             return user;
         }
-        public async Task<User> GetByName(string name)
+        public async Task<UserEntity> GetByName(string name)
         {
-            string sqlStatement = "SELECT * FROM public.\"User\" WHERE Username = @Username";
-            User user = null;
+            string sqlStatement = "SELECT * FROM public.\"user\" WHERE Username = @Username";
+            UserEntity user = null;
 
             try
             {
@@ -83,9 +83,9 @@ namespace DataAccess.Facades
             return user;
         }
 
-        public async Task<int> Insert(User user)
+        public async Task<int> Insert(UserEntity user)
         {
-            string sqlStatement = "INSERT INTO public.\"User\" (Username, Password) VALUES (@Username, @Password)";
+            string sqlStatement = "INSERT INTO public.\"user\" (Username, Password) VALUES (@Username, @Password)";
             int rowsAffected = 0;
 
             try
@@ -102,9 +102,9 @@ namespace DataAccess.Facades
             return rowsAffected;
         }
 
-        public async Task<int> Update(User user)
+        public async Task<int> Update(UserEntity user)
         {
-            string sqlStatement = "UPDATE public.\"User\" SET Username = @Username, Password = @Password WHERE Id = @Id";
+            string sqlStatement = "UPDATE public.\"user\" SET Username = @Username, Password = @Password WHERE Id = @Id";
             int rowsAffected = 0;
 
             try
@@ -123,7 +123,7 @@ namespace DataAccess.Facades
 
         public async Task<int> DeleteById(int id)
         {
-            string sqlStatement = "DELETE FROM public.\"User\" WHERE Id = @Id";
+            string sqlStatement = "DELETE FROM public.\"user\" WHERE Id = @Id";
             int rowsAffected = 0;
 
             try
@@ -142,7 +142,7 @@ namespace DataAccess.Facades
 
         public async Task<int> DeleteByName(string name)
         {
-            string sqlStatement = "DELETE FROM public.\"User\" WHERE Username = @Username";
+            string sqlStatement = "DELETE FROM public.\"user\" WHERE Username = @Username";
             int rowsAffected = 0;
 
             try

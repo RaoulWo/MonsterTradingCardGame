@@ -1,7 +1,8 @@
-﻿using BusinessObjects.Interfaces.Facades;
+﻿using BusinessObjects.Entities;
+using BusinessObjects.Interfaces.Facades;
 using BusinessObjects.Interfaces.Services;
-using BusinessObjects.Models;
 using DataAccess.Facades;
+
 
 namespace BusinessLogic.Services
 {
@@ -29,7 +30,7 @@ namespace BusinessLogic.Services
             _userFacade = userFacade;
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<UserEntity>> GetAll()
         {
             try
             {
@@ -41,7 +42,7 @@ namespace BusinessLogic.Services
             }
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<UserEntity> GetById(int id)
         {
             try
             {
@@ -53,7 +54,7 @@ namespace BusinessLogic.Services
             }
         }
 
-        public async Task<User> GetByName(string name)
+        public async Task<UserEntity> GetByName(string name)
         {
             try
             {
@@ -65,7 +66,7 @@ namespace BusinessLogic.Services
             }
         }
 
-        public async Task<int> Insert(User user)
+        public async Task<int> Insert(UserEntity user)
         {
             try
             {
@@ -77,7 +78,7 @@ namespace BusinessLogic.Services
             }
         }
 
-        public async Task<int> Update(User user)
+        public async Task<int> Update(UserEntity user)
         {
             try
             {

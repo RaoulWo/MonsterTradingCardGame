@@ -1,14 +1,12 @@
-﻿using System.Data.Common;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data;
+using BusinessObjects.Entities;
 using BusinessObjects.Interfaces;
 using BusinessObjects.Interfaces.Repositories;
-using BusinessObjects.Models;
 using Npgsql;
 
 namespace DataAccess.Repositories
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepository : Repository<UserEntity>, IUserRepository
     {
         public static IUserRepository Singleton
         {
@@ -35,7 +33,7 @@ namespace DataAccess.Repositories
         /// <param name="name"></param>
         /// <param name="getByNameSql"></param>
         /// <returns></returns>
-        public async Task<User> GetByName(string name, string getByNameSql)
+        public async Task<UserEntity> GetByName(string name, string getByNameSql)
         {
             try
             {
@@ -76,7 +74,7 @@ namespace DataAccess.Repositories
                     cmd.CommandType = CommandType.Text;
                     cmd.Transaction = sqlTransaction;
 
-                    DeleteCommandParameters(name, cmd);
+                    DeleteByNameCommandParameters(name, cmd);
                     rowsAffected = cmd.ExecuteNonQuery();
                 }
             }
@@ -93,19 +91,20 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
-        protected override List<User> Maps(NpgsqlDataReader reader)
+        protected override List<UserEntity> Maps(NpgsqlDataReader reader)
         {
-            List<User> users = new List<User>();
+            List<UserEntity> users = new List<UserEntity>();
 
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    User user = new User();
+                    UserEntity user = new UserEntity();
 
                     user.Id = Convert.ToInt32(reader["Id"].ToString());
                     user.Username = reader["Username"].ToString();
                     user.Password = reader["Password"].ToString();
+                    user.Coins = Convert.ToInt32(reader["Coins"].ToString());
 
                     users.Add(user);
                 }
@@ -119,9 +118,9 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
-        protected override User Map(NpgsqlDataReader reader)
+        protected override UserEntity Map(NpgsqlDataReader reader)
         {
-            User user = new User();
+            UserEntity user = new UserEntity();
 
             if (reader.HasRows)
             {
@@ -130,6 +129,7 @@ namespace DataAccess.Repositories
                     user.Id = Convert.ToInt32(reader["Id"].ToString());
                     user.Username = reader["Username"].ToString();
                     user.Password = reader["Password"].ToString();
+                    user.Coins = Convert.ToInt32(reader["Coins"].ToString());
                 }
             }
 
@@ -161,10 +161,11 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="cmd"></param>
-        protected override void InsertCommandParameters(User entity, NpgsqlCommand cmd)
+        protected override void InsertCommandParameters(UserEntity entity, NpgsqlCommand cmd)
         {
             cmd.Parameters.AddWithValue("@Username", entity.Username);
             cmd.Parameters.AddWithValue("@Password", entity.Password);
+            cmd.Parameters.AddWithValue("@Coins", entity.Coins);
         }
 
         /// <summary>
@@ -172,11 +173,12 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="cmd"></param>
-        protected override void UpdateCommandParameters(User entity, NpgsqlCommand cmd)
+        protected override void UpdateCommandParameters(UserEntity entity, NpgsqlCommand cmd)
         {
             cmd.Parameters.AddWithValue("@Id", entity.Id);
             cmd.Parameters.AddWithValue("@Username", entity.Username);
             cmd.Parameters.AddWithValue("@Password", entity.Password);
+            cmd.Parameters.AddWithValue("@Coins", entity.Coins);
         }
 
         /// <summary>
@@ -184,7 +186,7 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <param name="cmd"></param>
-        protected override void DeleteCommandParameters(int id, NpgsqlCommand cmd)
+        protected override void DeleteByIdCommandParameters(int id, NpgsqlCommand cmd)
         {
             cmd.Parameters.AddWithValue("@Id", id);
         }
@@ -194,7 +196,7 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="name"></param>
         /// <param name="cmd"></param>
-        protected void DeleteCommandParameters(string name, NpgsqlCommand cmd)
+        protected void DeleteByNameCommandParameters(string name, NpgsqlCommand cmd)
         {
             cmd.Parameters.AddWithValue("@Username", name);
         }

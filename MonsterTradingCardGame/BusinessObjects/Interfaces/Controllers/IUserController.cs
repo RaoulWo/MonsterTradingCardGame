@@ -1,5 +1,4 @@
-﻿
-using BusinessObjects.Models;
+﻿using BusinessObjects.Models;
 
 namespace BusinessObjects.Interfaces.Controllers
 {

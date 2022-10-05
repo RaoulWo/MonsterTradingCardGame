@@ -118,7 +118,7 @@ namespace Presentation
             {
                 if (HttpRequest.Target.StartsWith("/users"))
                 {
-                    response = await DelegateUserRequest();
+                    response = await DelegateUserEntityRequest();
                 }
                 else if (HttpRequest.Target.StartsWith("/sessions"))
                 {
@@ -165,7 +165,7 @@ namespace Presentation
             return response;
         }
 
-        private async Task<string> DelegateUserRequest()
+        private async Task<string> DelegateUserEntityRequest()
         {
             string response = null;
 

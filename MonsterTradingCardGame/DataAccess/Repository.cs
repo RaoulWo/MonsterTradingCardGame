@@ -156,7 +156,7 @@ namespace DataAccess
                     cmd.CommandType = CommandType.Text;
                     cmd.Transaction = sqlTransaction;
 
-                    DeleteCommandParameters(id, cmd);
+                    DeleteByIdCommandParameters(id, cmd);
                     rowsAffected = cmd.ExecuteNonQuery();
                 }
             }
@@ -173,6 +173,6 @@ namespace DataAccess
         protected abstract void GetByIdCommandParameters(int id, NpgsqlCommand cmd);
         protected abstract void InsertCommandParameters(T entity, NpgsqlCommand cmd);
         protected abstract void UpdateCommandParameters(T entity, NpgsqlCommand cmd);
-        protected abstract void DeleteCommandParameters(int id, NpgsqlCommand cmd);
+        protected abstract void DeleteByIdCommandParameters(int id, NpgsqlCommand cmd);
     }
 }
