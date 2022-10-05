@@ -1,13 +1,13 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
 using BusinessObjects.Base;
 using BusinessObjects.Interfaces;
+using Npgsql;
 
 namespace DataAccess
 {
     public abstract class Repository<T> : IRepository<T> where T : Entity, IAggregateRoot, new()
     {
-        protected SqlConnection _connection;
+        protected NpgsqlConnection _connection;
         protected readonly IUnitOfWork UnitOfWork;
 
         protected Repository(IUnitOfWork unitOfWork)
@@ -30,12 +30,12 @@ namespace DataAccess
         {
             try
             {
-                using (SqlCommand cmd = _connection.CreateCommand())
+                using (NpgsqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = getAllSql;
                     cmd.CommandType = CommandType.Text;
 
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (NpgsqlDataReader reader = cmd.ExecuteReader())
                     {
                         return Maps(reader);
                     }
@@ -57,13 +57,13 @@ namespace DataAccess
         {
             try
             {
-                using (SqlCommand cmd = _connection.CreateCommand())
+                using (NpgsqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = getByIdSql;
                     cmd.CommandType = CommandType.Text;
                     GetByIdCommandParameters(id, cmd);
 
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (NpgsqlDataReader reader = cmd.ExecuteReader())
                     {
                         return Map(reader);
                     }
@@ -82,13 +82,13 @@ namespace DataAccess
         /// <param name="insertSql"></param>
         /// <param name="sqlTransaction"></param>
         /// <returns></returns>
-        public async Task<int> Insert(T entity, string insertSql, SqlTransaction sqlTransaction)
+        public async Task<int> Insert(T entity, string insertSql, NpgsqlTransaction sqlTransaction)
         {
             int rowsAffected = 0;
 
             try
             {
-                using (SqlCommand cmd = _connection.CreateCommand())
+                using (NpgsqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = insertSql;
                     cmd.CommandType = CommandType.Text;
@@ -113,13 +113,13 @@ namespace DataAccess
         /// <param name="updateSql"></param>
         /// <param name="sqlTransaction"></param>
         /// <returns></returns>
-        public async Task<int> Update(T entity, string updateSql, SqlTransaction sqlTransaction)
+        public async Task<int> Update(T entity, string updateSql, NpgsqlTransaction sqlTransaction)
         {
             int rowsAffected = 0;
 
             try
             {
-                using (SqlCommand cmd = _connection.CreateCommand())
+                using (NpgsqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = updateSql;
                     cmd.CommandType = CommandType.Text;
@@ -144,13 +144,13 @@ namespace DataAccess
         /// <param name="deleteSql"></param>
         /// <param name="sqlTransaction"></param>
         /// <returns></returns>
-        public async Task<int> Delete(int id, string deleteSql, SqlTransaction sqlTransaction)
+        public async Task<int> DeleteById(int id, string deleteSql, NpgsqlTransaction sqlTransaction)
         {
             int rowsAffected = 0;
 
             try
             {
-                using (SqlCommand cmd = _connection.CreateCommand())
+                using (NpgsqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = deleteSql;
                     cmd.CommandType = CommandType.Text;
@@ -168,11 +168,11 @@ namespace DataAccess
             return rowsAffected;
         }
 
-        protected abstract List<T> Maps(SqlDataReader reader);
-        protected abstract T Map(SqlDataReader reader);
-        protected abstract void GetByIdCommandParameters(int id, SqlCommand cmd);
-        protected abstract void InsertCommandParameters(T entity, SqlCommand cmd);
-        protected abstract void UpdateCommandParameters(T entity, SqlCommand cmd);
-        protected abstract void DeleteCommandParameters(int id, SqlCommand cmd);
+        protected abstract List<T> Maps(NpgsqlDataReader reader);
+        protected abstract T Map(NpgsqlDataReader reader);
+        protected abstract void GetByIdCommandParameters(int id, NpgsqlCommand cmd);
+        protected abstract void InsertCommandParameters(T entity, NpgsqlCommand cmd);
+        protected abstract void UpdateCommandParameters(T entity, NpgsqlCommand cmd);
+        protected abstract void DeleteCommandParameters(int id, NpgsqlCommand cmd);
     }
 }

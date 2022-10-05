@@ -1,12 +1,11 @@
-﻿
-using System.Data.SqlClient;
+﻿using Npgsql;
 
 namespace BusinessObjects.Interfaces
 {
     public interface IUnitOfWork
     {
         IDatabaseContext DatabaseContext { get; }
-        SqlTransaction BeginTransaction();
+        NpgsqlTransaction BeginTransaction();
 
         void CommitTransaction();
     }

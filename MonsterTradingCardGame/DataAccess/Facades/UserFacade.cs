@@ -1,9 +1,9 @@
-﻿using System.Data.SqlClient;
-using BusinessObjects.Interfaces;
+﻿using BusinessObjects.Interfaces;
 using BusinessObjects.Interfaces.Facades;
 using BusinessObjects.Interfaces.Repositories;
 using BusinessObjects.Models;
 using DataAccess.Repositories;
+using Npgsql;
 
 namespace DataAccess.Facades
 {
@@ -15,7 +15,7 @@ namespace DataAccess.Facades
             {
                 if (_singleton == null)
                 {
-                    _singleton = new UserFacade(/* UserRepository.Singleton, UnitOfWork.Singleton */);
+                    _singleton = new UserFacade(UserRepository.Singleton, UnitOfWork.Singleton);
                 }
 
                 return _singleton;
@@ -24,23 +24,23 @@ namespace DataAccess.Facades
 
         private static UserFacade _singleton = null;
 
-        // private IUserRepository _userRepository;
-        // private IUnitOfWork _unitOfWork;
+        private IUserRepository _userRepository;
+        private IUnitOfWork _unitOfWork;
 
-        private UserFacade(/* IUserRepository userRepository, IUnitOfWork unitOfWork */)
+        private UserFacade(IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
-            // _userRepository = userRepository;
-            // _unitOfWork = unitOfWork;
+            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            string sqlStatement = "SELECT * FROM User";
+            string sqlStatement = "SELECT * FROM public.\"User\"";
             IEnumerable<User> users = null;
 
             try
             {
-                // users = await _userRepository.GetAll(sqlStatement);
+                users = await _userRepository.GetAll(sqlStatement);
             }
             catch (Exception e)
             {
@@ -52,12 +52,12 @@ namespace DataAccess.Facades
 
         public async Task<User> GetById(int id)
         {
-            string sqlStatement = "SELECT * FROM User WHERE Id = @Id";
+            string sqlStatement = "SELECT * FROM public.\"User\" WHERE Id = @Id";
             User user = null;
 
             try
             {
-                // user = await _userRepository.GetById(id, sqlStatement);
+                user = await _userRepository.GetById(id, sqlStatement);
             }
             catch (Exception e)
             {
@@ -66,15 +66,14 @@ namespace DataAccess.Facades
 
             return user;
         }
-
         public async Task<User> GetByName(string name)
         {
-            string sqlStatement = "SELECT * FROM User WHERE Username = @Username";
+            string sqlStatement = "SELECT * FROM public.\"User\" WHERE Username = @Username";
             User user = null;
 
             try
             {
-                // user = await _userRepository.GetByName(name, sqlStatement);
+                user = await _userRepository.GetByName(name, sqlStatement);
             }
             catch (Exception e)
             {
@@ -86,14 +85,14 @@ namespace DataAccess.Facades
 
         public async Task<int> Insert(User user)
         {
-            string sqlStatement = "INSERT INTO Person (Username, Password) VALUES (@Username, @Password)";
+            string sqlStatement = "INSERT INTO public.\"User\" (Username, Password) VALUES (@Username, @Password)";
             int rowsAffected = 0;
 
             try
             {
-                // SqlTransaction transaction = _unitOfWork.BeginTransaction();
-                // rowsAffected = await _userRepository.Insert(user, sqlStatement, transaction);
-                // _unitOfWork.CommitTransaction();
+                NpgsqlTransaction transaction = _unitOfWork.BeginTransaction();
+                rowsAffected = await _userRepository.Insert(user, sqlStatement, transaction);
+                _unitOfWork.CommitTransaction();
             }
             catch (Exception e)
             {
@@ -105,14 +104,14 @@ namespace DataAccess.Facades
 
         public async Task<int> Update(User user)
         {
-            string sqlStatement = "UPDATE User SET Username = @Username, Password = @Password WHERE Id = @Id";
+            string sqlStatement = "UPDATE public.\"User\" SET Username = @Username, Password = @Password WHERE Id = @Id";
             int rowsAffected = 0;
 
             try
             {
-                // SqlTransaction transaction = _unitOfWork.BeginTransaction();
-                // rowsAffected = await _userRepository.Update(user, sqlStatement, transaction);
-                // _unitOfWork.CommitTransaction();
+                NpgsqlTransaction transaction = _unitOfWork.BeginTransaction();
+                rowsAffected = await _userRepository.Update(user, sqlStatement, transaction);
+                _unitOfWork.CommitTransaction();
             }
             catch (Exception e)
             {
@@ -122,16 +121,16 @@ namespace DataAccess.Facades
             return rowsAffected;
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<int> DeleteById(int id)
         {
-            string sqlStatement = "DELETE FROM User WHERE Id = @Id";
+            string sqlStatement = "DELETE FROM public.\"User\" WHERE Id = @Id";
             int rowsAffected = 0;
 
             try
             {
-                // SqlTransaction transaction = _unitOfWork.BeginTransaction();
-                // rowsAffected = await _userRepository.Delete(id, sqlStatement, transaction);
-                // _unitOfWork.CommitTransaction();
+                NpgsqlTransaction transaction = _unitOfWork.BeginTransaction();
+                rowsAffected = await _userRepository.DeleteById(id, sqlStatement, transaction);
+                _unitOfWork.CommitTransaction();
             }
             catch (Exception e)
             {
@@ -141,16 +140,16 @@ namespace DataAccess.Facades
             return rowsAffected;
         }
 
-        public async Task<int> Delete(string name)
+        public async Task<int> DeleteByName(string name)
         {
-            string sqlStatement = "DELETE FROM User WHERE Username = @Username";
+            string sqlStatement = "DELETE FROM public.\"User\" WHERE Username = @Username";
             int rowsAffected = 0;
 
             try
             {
-                // SqlTransaction transaction = _unitOfWork.BeginTransaction();
-                // rowsAffected = await _userRepository.Delete(id, sqlStatement, transaction);
-                // _unitOfWork.CommitTransaction();
+                NpgsqlTransaction transaction = _unitOfWork.BeginTransaction();
+                rowsAffected = await _userRepository.DeleteByName(name, sqlStatement, transaction);
+                _unitOfWork.CommitTransaction();
             }
             catch (Exception e)
             {

@@ -1,33 +1,34 @@
 ﻿using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using BusinessObjects.Interfaces;
+using Npgsql;
 
 namespace DataAccess
 {
     public class DatabaseContext : IDatabaseContext
     {
         private readonly string _connectionString;
-        private SqlConnection _connection;
+        private NpgsqlConnection _connection;
 
         /// <summary>
         /// Gets connection string from web.config when class is initialized.
         /// </summary>
         public DatabaseContext()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            _connectionString =
+                "Host=localhost;Port=5432;Username=postgres;Database=MonsterTradingCardGame";
         }
 
         /// <summary>
         /// Gets the connection.
         /// </summary>
-        public SqlConnection Connection
+        public NpgsqlConnection Connection
         {
             get
             {
                 if (_connection == null)
                 {
-                    _connection = new SqlConnection(_connectionString);
+                    _connection = new NpgsqlConnection(_connectionString);
                 }
 
                 if (_connection.State != ConnectionState.Open)

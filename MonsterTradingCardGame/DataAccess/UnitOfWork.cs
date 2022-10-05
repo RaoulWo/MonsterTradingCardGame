@@ -1,5 +1,5 @@
-﻿using System.Data.SqlClient;
-using BusinessObjects.Interfaces;
+﻿using BusinessObjects.Interfaces;
+using Npgsql;
 
 namespace DataAccess
 {
@@ -20,7 +20,7 @@ namespace DataAccess
 
         private static IUnitOfWork _singleton = null;
 
-        public SqlTransaction Transaction { get; private set; }
+        public NpgsqlTransaction Transaction { get; private set; }
 
         /// <summary>
         /// Property for the DatabaseContext.
@@ -49,7 +49,7 @@ namespace DataAccess
         /// Begins a database transaction.
         /// </summary>
         /// <returns></returns>
-        public SqlTransaction BeginTransaction()
+        public NpgsqlTransaction BeginTransaction()
         {
             if (Transaction != null)
             {

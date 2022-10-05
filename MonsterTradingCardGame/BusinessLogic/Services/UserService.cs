@@ -7,7 +7,6 @@ namespace BusinessLogic.Services
 {
     public class UserService : IUserService
     {
-
         public static IUserService Singleton
         {
             get
@@ -32,16 +31,6 @@ namespace BusinessLogic.Services
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            List<User> list = new List<User>();
-            list.Add(new User(1, "Admin", "Admin", 20, null, null));
-            list.Add(new User(2, "User1", "User1", 20, null, null));
-            list.Add(new User(3, "User2", "User2", 20, null, null));
-            list.Add(new User(4, "User3", "User3", 20, null, null));
-            list.Add(new User(5, "User4", "User4", 20, null, null));
-            list.Add(new User(6, "User5", "User5", 20, null, null));
-
-            return list;
-
             try
             {
                 return await _userFacade.GetAll();
@@ -54,15 +43,6 @@ namespace BusinessLogic.Services
 
         public async Task<User> GetById(int id)
         {
-            IEnumerable<User> list = await GetAll();
-
-            foreach (User user in list)
-            {
-                if (user.Id == id) return user;
-            }
-
-            return null;
-
             try
             {
                 return await _userFacade.GetById(id);
@@ -75,15 +55,6 @@ namespace BusinessLogic.Services
 
         public async Task<User> GetByName(string name)
         {
-            IEnumerable<User> list = await GetAll();
-
-            foreach (User user in list)
-            {
-                if (user.Username == name) return user;
-            }
-
-            return null;
-
             try
             {
                 return await _userFacade.GetByName(name);
@@ -118,11 +89,11 @@ namespace BusinessLogic.Services
             }
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<int> DeleteById(int id)
         {
             try
             {
-                return await _userFacade.Delete(id);
+                return await _userFacade.DeleteById(id);
             }
             catch (Exception e)
             {
@@ -130,16 +101,18 @@ namespace BusinessLogic.Services
             }
         }
 
-        public async Task<int> Delete(string name)
+        public async Task<int> DeleteByName(string name)
         {
             try
             {
-                return await _userFacade.Delete(name);
+                return await _userFacade.DeleteByName(name);
             }
             catch (Exception e)
             {
                 throw e;
             }
         }
+
     }
+
 }
