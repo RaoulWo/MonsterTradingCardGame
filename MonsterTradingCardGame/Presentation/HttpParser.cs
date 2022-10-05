@@ -2,8 +2,10 @@
 
 namespace Presentation
 {
+
     public class HttpParser
     {
+
         public static HttpParser Singleton
         {
             get
@@ -19,80 +21,42 @@ namespace Presentation
 
         private static HttpParser _singleton = null;
 
-        public HttpRequest HttpRequest { get; private set; }
-        public bool HasFinishedParsing { get; set; } = false;
-
-        private string _httpHeader;
-        private string _httpMethod;
-        private string _httpTarget;
-        private string _httpVersion;
-        private int _httpContentLength;
-        private string _httpContentType;
-        private string _httpBody;
-        private bool _hasBody = false;
-
-        public void Parse(string request)
+        public HttpRequest Parse(string request)
         {
-            if (!_hasBody)
-            {
-                ParseHeader(request);
-            }
-            else
-            {
-                HttpRequest = new HttpRequest(
-                    _httpMethod,
-                    _httpTarget,
-                    _httpVersion,
-                    _httpContentLength,
-                    _httpContentType,
-                    request
-                );
-                HasFinishedParsing = true;
-                _hasBody = false;
-            }
-        }
+            string[] tokens = request.Split("\r\n");
 
-        private void ParseHeader(string request)
-        {
-            _httpHeader = request.Replace("\r\n", " "); ;
-            string[] tokens = _httpHeader.Split(" ");
+            string[] line1 = tokens[0].Split(" ");
 
-            _httpMethod = tokens[0];
-            _httpTarget = tokens[1];
-            _httpVersion = tokens[2];
+            string method = line1[0];
+            string target = line1[1];
+            string version = line1[2];
 
-            for (int i = 0; i < tokens.Length; i++)
+            int contentLength = 0;
+            string contentType = null;
+            foreach (string token in tokens)
             {
-                if (tokens[i] == "Content-Length:" && i < tokens.Length - 1)
+                if (token.StartsWith("Content-Length:"))
                 {
-                    _httpContentLength = tokens[i + 1] != "" ? Convert.ToInt32(tokens[i + 1]) : 0;
+                    contentLength = Convert.ToInt32(token.Split(" ")[1]);
+                }
+
+                if (token.StartsWith("Content-Type:"))
+                {
+                    contentType = token.Split(" ")[1];
                 }
             }
 
-            if (_httpContentLength > 0)
+            int index = Array.FindIndex(tokens, row => row.Equals("")) + 1;
+            string body = null;
+            for (; index < tokens.Length; index++)
             {
-                _hasBody = true;
+                body += tokens[index];
+            }
 
-                for (int i = 0; i < tokens.Length; i++)
-                {
-                    if (tokens[i] == "Content-Type:" && i < tokens.Length - 1)
-                    {
-                        _httpContentType = tokens[i + 1];
-                    }
-                }
-            }
-            else
-            {
-                HttpRequest = new HttpRequest(
-                    _httpMethod, 
-                    _httpTarget, 
-                    _httpVersion, 
-                    _httpContentLength, 
-                    null, 
-                    null
-                    );
-                HasFinishedParsing = true;
-            }
+            return new HttpRequest(method, target, version, contentLength, contentType, body);
+
         }
+
     }
+
 }

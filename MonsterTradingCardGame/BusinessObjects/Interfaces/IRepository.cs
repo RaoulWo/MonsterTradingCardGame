@@ -1,5 +1,5 @@
-﻿using System.Data.SqlClient;
-using BusinessObjects.Base;
+﻿using BusinessObjects.Base;
+using Npgsql;
 
 namespace BusinessObjects.Interfaces
 {
@@ -7,8 +7,8 @@ namespace BusinessObjects.Interfaces
     {
         public Task<IEnumerable<T>> GetAll(string getAllSql);
         public Task<T> GetById(int id, string getByIdSql);
-        public Task<int> Insert(T entity, string insertSql, SqlTransaction sqlTransaction);
-        public Task<int> Update(T entity, string updateSql, SqlTransaction sqlTransaction);
-        public Task<int> Delete(int id, string deleteSql, SqlTransaction sqlTransaction);
+        public Task<int> Insert(T entity, string insertSql, NpgsqlTransaction sqlTransaction);
+        public Task<int> Update(T entity, string updateSql, NpgsqlTransaction sqlTransaction);
+        public Task<int> DeleteById(int id, string deleteSql, NpgsqlTransaction sqlTransaction);
     }
 }

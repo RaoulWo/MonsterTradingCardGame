@@ -63,9 +63,27 @@ namespace Presentation.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(user);
         }
 
+        public async Task<string> GetByName(HttpRequest httpRequest)
+        {
+            string name = httpRequest.Target.Substring(7);
+
+            User user = null;
+
+            try
+            {
+                user = await _userService.GetByName(name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(user);
+        }
+
         public async Task<string> Insert(HttpRequest httpRequest)
         {
-            User user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(httpRequest.Body);
+            User user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(httpRequest.Body.Trim());
 
             int rowsAffected = 0;
 
@@ -99,7 +117,7 @@ namespace Presentation.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(new { rowsAffected = rowsAffected });
         }
 
-        public async Task<string> Delete(HttpRequest httpRequest)
+        public async Task<string> DeleteById(HttpRequest httpRequest)
         {
             int id = Convert.ToInt32(httpRequest.Target.Substring(7));
 
@@ -107,7 +125,7 @@ namespace Presentation.Controllers
 
             try
             {
-                rowsAffected = await _userService.Delete(id);
+                rowsAffected = await _userService.DeleteById(id);
             }
             catch (Exception e)
             {
@@ -116,5 +134,24 @@ namespace Presentation.Controllers
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(new { rowsAffected = rowsAffected });
         }
+        public async Task<string> DeleteByName(HttpRequest httpRequest)
+        {
+            string name = httpRequest.Target.Substring(7);
+
+            int rowsAffected = 0;
+
+            try
+            {
+                rowsAffected = await _userService.DeleteByName(name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new { rowsAffected = rowsAffected });
+        }
+
     }
+
 }

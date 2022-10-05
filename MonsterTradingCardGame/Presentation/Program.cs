@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using BusinessObjects.Models;
 
 namespace Presentation
 {
@@ -25,7 +26,7 @@ namespace Presentation
                 server.Start();
 
                 // Buffer for reading data.
-                Byte[] bytes = new Byte[256];
+                byte[] bytes = new byte[1024];
                 String data = null;
 
                 // Enter the listening loop.
@@ -44,27 +45,24 @@ namespace Presentation
 
                     int size = 0;
 
-                    // Loop to receive all the data sent by the client
-                    while ((size = await stream.ReadAsync(bytes, 0, bytes.Length)) != 0)
+                    string tmpdata = null;
+
+                    // Receive all the data sent by the client
+                    if ((size = await stream.ReadAsync(bytes, 0, bytes.Length)) > 0)
                     {
                         // Translate data bytes to an ASCII string.
-                        data = System.Text.Encoding.ASCII.GetString(bytes, 0, size);
-                        Console.WriteLine("RECEIVED: {0}", data);
-
-                        // Process the data sent by the client.
-                        httpParser.Parse(data);
-
-                        if (httpParser.HasFinishedParsing)
-                        {
-                            httpParser.HasFinishedParsing = false;
-
-                            string response = await httpHandler.HandleRequest(httpParser.HttpRequest);
-
-                            // Send back a response.
-                            stream.Write(Encoding.ASCII.GetBytes(response));
-                            Console.WriteLine("SENT: {0}", response);
-                        }
+                        data += System.Text.Encoding.ASCII.GetString(bytes, 0, size);
                     }
+                    Console.WriteLine("RECEIVED: {0}", data);
+
+                    // Process the data sent by the client.
+                    HttpRequest request = httpParser.Parse(data);
+
+                    string response = await httpHandler.HandleRequest(request);
+
+                    // Send back a response.
+                    stream.Write(Encoding.ASCII.GetBytes(response));
+                    Console.WriteLine("SENT: {0}", response);
 
                     // Shutdown and end connection
                     client.Close();
@@ -81,5 +79,7 @@ namespace Presentation
                 server.Stop();
             }
         }
+
     }
+
 }

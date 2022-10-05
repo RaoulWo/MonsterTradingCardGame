@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using BusinessObjects.Interfaces;
 using BusinessObjects.Interfaces.Repositories;
 using BusinessObjects.Models;
+using Npgsql;
 
 namespace DataAccess.Repositories
 {
@@ -38,13 +39,13 @@ namespace DataAccess.Repositories
         {
             try
             {
-                using (SqlCommand cmd = _connection.CreateCommand())
+                using (NpgsqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = getByNameSql;
                     cmd.CommandType = CommandType.Text;
                     GetByNameCommandParameters(name, cmd);
 
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (NpgsqlDataReader reader = cmd.ExecuteReader())
                     {
                         return Map(reader);
                     }
@@ -63,13 +64,13 @@ namespace DataAccess.Repositories
         /// <param name="deleteSql"></param>
         /// <param name="sqlTransaction"></param>
         /// <returns></returns>
-        public async Task<int> Delete(string name, string deleteSql, SqlTransaction sqlTransaction)
+        public async Task<int> DeleteByName(string name, string deleteSql, NpgsqlTransaction sqlTransaction)
         {
             int rowsAffected = 0;
 
             try
             {
-                using (SqlCommand cmd = _connection.CreateCommand())
+                using (NpgsqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = deleteSql;
                     cmd.CommandType = CommandType.Text;
@@ -92,7 +93,7 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
-        protected override List<User> Maps(SqlDataReader reader)
+        protected override List<User> Maps(NpgsqlDataReader reader)
         {
             List<User> users = new List<User>();
 
@@ -118,7 +119,7 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
-        protected override User Map(SqlDataReader reader)
+        protected override User Map(NpgsqlDataReader reader)
         {
             User user = new User();
 
@@ -140,7 +141,7 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <param name="cmd"></param>
-        protected override void GetByIdCommandParameters(int id, SqlCommand cmd)
+        protected override void GetByIdCommandParameters(int id, NpgsqlCommand cmd)
         {
             cmd.Parameters.AddWithValue("@Id", id);
         }
@@ -150,7 +151,7 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="name"></param>
         /// <param name="cmd"></param>
-        protected void GetByNameCommandParameters(string name, SqlCommand cmd)
+        protected void GetByNameCommandParameters(string name, NpgsqlCommand cmd)
         {
             cmd.Parameters.AddWithValue("@Username", name);
         }
@@ -160,7 +161,7 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="cmd"></param>
-        protected override void InsertCommandParameters(User entity, SqlCommand cmd)
+        protected override void InsertCommandParameters(User entity, NpgsqlCommand cmd)
         {
             cmd.Parameters.AddWithValue("@Username", entity.Username);
             cmd.Parameters.AddWithValue("@Password", entity.Password);
@@ -171,7 +172,7 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="cmd"></param>
-        protected override void UpdateCommandParameters(User entity, SqlCommand cmd)
+        protected override void UpdateCommandParameters(User entity, NpgsqlCommand cmd)
         {
             cmd.Parameters.AddWithValue("@Id", entity.Id);
             cmd.Parameters.AddWithValue("@Username", entity.Username);
@@ -183,7 +184,7 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <param name="cmd"></param>
-        protected override void DeleteCommandParameters(int id, SqlCommand cmd)
+        protected override void DeleteCommandParameters(int id, NpgsqlCommand cmd)
         {
             cmd.Parameters.AddWithValue("@Id", id);
         }
@@ -193,7 +194,7 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="name"></param>
         /// <param name="cmd"></param>
-        protected void DeleteCommandParameters(string name, SqlCommand cmd)
+        protected void DeleteCommandParameters(string name, NpgsqlCommand cmd)
         {
             cmd.Parameters.AddWithValue("@Username", name);
         }

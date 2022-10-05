@@ -1,5 +1,4 @@
-﻿using System.Text.Encodings.Web;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using BusinessObjects.Models;
 
 namespace Presentation
@@ -58,6 +57,8 @@ namespace Presentation
             }
             catch (Exception e)
             {
+                Console.WriteLine(e);
+
                 response = HttpRequest.Version + " 500 Internal Server Error" + Environment.NewLine +
                            "Content-Length: " + 0 + Environment.NewLine +
                            "Content-Type: " + "application/json" + Environment.NewLine +
@@ -174,21 +175,30 @@ namespace Presentation
                     if (HttpRequest.Target == "/users")
                         response = await CreateResponse(Controllers.UserController.Singleton.GetAll);
                     else if (Regex.IsMatch(HttpRequest.Target, "/users/.+"))
-                        response = await CreateResponse(Controllers.UserController.Singleton.GetById);
+                        response = await CreateResponse(Controllers.UserController.Singleton.GetByName);
                     else
                         throw new KeyNotFoundException();
                     break;
                 case "POST":
-                    throw new NotImplementedException();
+                    if (HttpRequest.Target == "/users")
+                        response = await CreateResponse(Controllers.UserController.Singleton.Insert);
+                    else
+                        throw new KeyNotFoundException();
                     break;
                 case "PATCH":
                     throw new NotImplementedException();
                     break;
                 case "PUT":
-                    throw new NotImplementedException();
+                    if (Regex.IsMatch(HttpRequest.Target, "/users/.+"))
+                        response = await CreateResponse(Controllers.UserController.Singleton.Update);
+                    else
+                        throw new KeyNotFoundException();
                     break;
                 case "DELETE":
-                    throw new NotImplementedException();
+                    if (Regex.IsMatch(HttpRequest.Target, "/users/.+"))
+                        response = await CreateResponse(Controllers.UserController.Singleton.DeleteByName);
+                    else
+                        throw new KeyNotFoundException();
                     break;
             }
 

@@ -10,7 +10,7 @@ namespace BusinessObjects.Interfaces.Facades
         public Task<User> GetByName(string name);
         public Task<int> Insert(User user);
         public Task<int> Update(User user);
-        public Task<int> Delete(int id);
-        public Task<int> Delete(string name);
+        public Task<int> DeleteById(int id);
+        public Task<int> DeleteByName(string name);
     }
 }

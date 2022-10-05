@@ -3,13 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{F235A2D3-D86E-41ED-A39E-885264970365}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{F235A2D3-D86E-41ED-A39E-885264970365}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{E805200C-1FD7-4A10-812E-0C4160502DB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{E805200C-1FD7-4A10-812E-0C4160502DB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{88D36040-3933-4ECA-90F1-CC2800900E1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{88D36040-3933-4ECA-90F1-CC2800900E1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObjects", "BusinessObjects\BusinessObjects.csproj", "{CBB0FA9B-ABB4-427A-A789-83EF4956CC43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObjects", "BusinessObjects\BusinessObjects.csproj", "{CBB0FA9B-ABB4-427A-A789-83EF4956CC43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Test", "Presentation.Test\Presentation.Test.csproj", "{5E00F968-749B-4068-83E6-5CDFCB60F749}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess.Test", "DataAccess.Test\DataAccess.Test.csproj", "{B86367FD-2F76-4EBB-A2FB-B2A2EF212BAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic.Test", "BusinessLogic.Test\BusinessLogic.Test.csproj", "{59A1392C-76EB-4535-89DF-886DCB84F846}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObjects.Test", "BusinessObjects.Test\BusinessObjects.Test.csproj", "{307C9458-D8B6-4FFC-BD90-3BD67CF20240}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +41,22 @@ Global
 		{CBB0FA9B-ABB4-427A-A789-83EF4956CC43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBB0FA9B-ABB4-427A-A789-83EF4956CC43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBB0FA9B-ABB4-427A-A789-83EF4956CC43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E00F968-749B-4068-83E6-5CDFCB60F749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E00F968-749B-4068-83E6-5CDFCB60F749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E00F968-749B-4068-83E6-5CDFCB60F749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E00F968-749B-4068-83E6-5CDFCB60F749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B86367FD-2F76-4EBB-A2FB-B2A2EF212BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B86367FD-2F76-4EBB-A2FB-B2A2EF212BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B86367FD-2F76-4EBB-A2FB-B2A2EF212BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B86367FD-2F76-4EBB-A2FB-B2A2EF212BAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59A1392C-76EB-4535-89DF-886DCB84F846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A1392C-76EB-4535-89DF-886DCB84F846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59A1392C-76EB-4535-89DF-886DCB84F846}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59A1392C-76EB-4535-89DF-886DCB84F846}.Release|Any CPU.Build.0 = Release|Any CPU
+		{307C9458-D8B6-4FFC-BD90-3BD67CF20240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{307C9458-D8B6-4FFC-BD90-3BD67CF20240}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{307C9458-D8B6-4FFC-BD90-3BD67CF20240}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{307C9458-D8B6-4FFC-BD90-3BD67CF20240}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

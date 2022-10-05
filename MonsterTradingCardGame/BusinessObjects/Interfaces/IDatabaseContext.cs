@@ -1,10 +1,10 @@
-﻿using System.Data.SqlClient;
+﻿using Npgsql;
 
 namespace BusinessObjects.Interfaces
 {
     public interface IDatabaseContext
     {
-        SqlConnection Connection { get; }
+        NpgsqlConnection Connection { get; }
         void Dispose();
     }
 }

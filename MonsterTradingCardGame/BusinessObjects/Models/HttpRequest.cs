@@ -1,5 +1,4 @@
-﻿
-namespace BusinessObjects.Models
+﻿namespace BusinessObjects.Models
 {
     public class HttpRequest
     {
