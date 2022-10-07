@@ -1,11 +1,12 @@
-﻿using BusinessObjects.Enums;
+﻿using BusinessObjects.Entities;
+using BusinessObjects.Enums;
 using BusinessObjects.Models;
 
 namespace BusinessLogic.Utils
 {
     public class MonsterCardFactory : CardFactory
     {
-        public override Card GetCard(string name)
+        public override CardEntity GetCard(string name)
         {
             switch (name)
             {

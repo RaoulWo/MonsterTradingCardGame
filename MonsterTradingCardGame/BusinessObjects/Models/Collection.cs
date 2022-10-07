@@ -1,11 +1,13 @@
 ﻿
+using BusinessObjects.Entities;
+
 namespace BusinessObjects.Models
 {
     public class Collection
     {
-        public List<Card> Cards { get; }
+        public List<CardEntity> Cards { get; }
 
-        public Collection(List<Card> cards)
+        public Collection(List<CardEntity> cards)
         {
             Cards = cards;
         }

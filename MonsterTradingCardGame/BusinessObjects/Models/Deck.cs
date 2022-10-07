@@ -1,11 +1,13 @@
 ﻿
+using BusinessObjects.Entities;
+
 namespace BusinessObjects.Models
 {
     public class Deck
     {
-        public List<Card> Cards { get; }
+        public List<CardEntity> Cards { get; }
 
-        public Deck(List<Card> cards)
+        public Deck(List<CardEntity> cards)
         {
             Cards = cards;
         }

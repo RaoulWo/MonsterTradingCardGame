@@ -290,19 +290,33 @@ namespace Presentation
             switch (HttpRequest.Method)
             {
                 case "GET":
-                    throw new NotImplementedException();
+                    if (HttpRequest.Target == "/cards")
+                        response = await CreateResponse(Controllers.CardController.Singleton.GetAll);
+                    else if (Regex.IsMatch(HttpRequest.Target, "/cards/.+"))
+                        response = await CreateResponse(Controllers.CardController.Singleton.GetById);
+                    else
+                        throw new KeyNotFoundException();
                     break;
                 case "POST":
-                    throw new NotImplementedException();
+                    if (HttpRequest.Target == "/cards")
+                        response = await CreateResponse(Controllers.CardController.Singleton.Insert);
+                    else
+                        throw new KeyNotFoundException();
                     break;
                 case "PATCH":
                     throw new NotImplementedException();
                     break;
                 case "PUT":
-                    throw new NotImplementedException();
+                    if (Regex.IsMatch(HttpRequest.Target, "/cards/.+"))
+                        response = await CreateResponse(Controllers.CardController.Singleton.Update);
+                    else
+                        throw new KeyNotFoundException();
                     break;
                 case "DELETE":
-                    throw new NotImplementedException();
+                    if (Regex.IsMatch(HttpRequest.Target, "/cards/.+"))
+                        response = await CreateResponse(Controllers.CardController.Singleton.DeleteById);
+                    else
+                        throw new KeyNotFoundException();
                     break;
             }
 

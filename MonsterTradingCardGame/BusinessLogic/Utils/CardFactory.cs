@@ -1,12 +1,12 @@
-﻿using BusinessObjects.Enums;
+﻿using BusinessObjects.Entities;
+using BusinessObjects.Enums;
 using BusinessObjects.Interfaces;
-using BusinessObjects.Models;
 
 namespace BusinessLogic.Utils
 {
     public abstract class CardFactory : ICardFactory
     {
-        public abstract Card GetCard(string name);
+        public abstract CardEntity GetCard(string name);
 
         public static ICardFactory CreateCardFactory(CardType cardType)
         {
