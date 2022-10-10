@@ -7,6 +7,7 @@
         public string Version { get; set; }
         public int ContentLength { get; set; }
         public string ContentType { get; set; }
+        public string Authorization { get; set; }
         public string Body { get; set; }
 
         public HttpRequest(
@@ -15,6 +16,7 @@
             string version, 
             int contentLength,
             string contentType,
+            string authorization,
             string body
             )
         {
@@ -23,6 +25,7 @@
             Version = version;
             ContentLength = contentLength;
             ContentType = contentType;
+            Authorization = authorization;
             Body = body;
         }
     }

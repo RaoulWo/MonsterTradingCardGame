@@ -26,13 +26,14 @@ namespace Presentation
             string[] tokens = request.Split("\r\n");
 
             string[] line1 = tokens[0].Split(" ");
-
             string method = line1[0];
             string target = line1[1];
             string version = line1[2];
 
             int contentLength = 0;
             string contentType = null;
+            string authorization = null;
+
             foreach (string token in tokens)
             {
                 if (token.StartsWith("Content-Length:"))
@@ -44,6 +45,11 @@ namespace Presentation
                 {
                     contentType = token.Split(" ")[1];
                 }
+
+                if (token.StartsWith("Authorization:"))
+                {
+                    authorization = token.Split(" ")[1];
+                }
             }
 
             int index = Array.FindIndex(tokens, row => row.Equals("")) + 1;
@@ -53,7 +59,7 @@ namespace Presentation
                 body += tokens[index];
             }
 
-            return new HttpRequest(method, target, version, contentLength, contentType, body);
+            return new HttpRequest(method, target, version, contentLength, contentType, authorization, body);
 
         }
 
