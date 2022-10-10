@@ -25,7 +25,7 @@ namespace Presentation.Controllers
         
         private IUserService _userService;
 
-        private UserController(IUserService userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
